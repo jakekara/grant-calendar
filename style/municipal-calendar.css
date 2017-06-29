@@ -91,6 +91,9 @@ div.month.this-month{
     border-left: 9px solid palegreen;
 }
 
+.grant.loser{
+    border-left: 9px solid pink;
+}
 .box {
     width: 1em;
     height: 1em;
@@ -120,9 +123,16 @@ div.month.this-month{
 .grant h5{
     margin-top: 0px;
     margin-bottom: 2px;
+    cursor: pointer
+}
+
+.picker_label{
+    float:left;
+    font-size: 12px;
 }
 
 .red-dot {
+    box-shadow: 0px 0px 2px black;
     border-radius: 50%;
     border-radius: 4px;
     background-color: red;

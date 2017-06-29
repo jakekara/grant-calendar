@@ -17551,7 +17551,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 },{}],4:[function(require,module,exports){
 // import dependencies
-var d3 = require("d3");
+d3 = require("d3");
 var numeral = require("numeraljs");
 
 // set up some config globals
@@ -17621,7 +17621,9 @@ var go = function(d)
 	}
     });
 
+    CONTAINER.append("div").classed("picker_label", true).text("Select your town:");
     var picker = CONTAINER.append("div").append("select");
+    CONTAINER.append("div").classed("clear-both", true);
 
     picker.selectAll("option")
 	.data(TOWNS).enter()
@@ -17664,7 +17666,7 @@ var go = function(d)
     var grant_boxes = month_boxes.selectAll(".grant")
 	.data(function(d){ return d["grants"]; })
 	.enter()
-	.append("div")
+	.append("div")    
 	.attr("data-grant-name", function(d){ return d["Appropriation Name"]; })
     	.classed("billion", function(d){
 	    console.log
@@ -17714,9 +17716,51 @@ var go = function(d)
 	.classed("town-detail", true)
 	.classed("no-town-details", true)
 
+
+    var disco_fever = function(){
+	var colors = ["pink","lightgreen","lightskyblue"];
+	colors = ["yellow"];
+	d3.selectAll(".grant")
+	    .transition()
+	    .style("border-left",function(){
+		var that = this
+
+		d3.select(that).style("opacity",0);
+		
+		setTimeout(function(){
+		    d3.select(that)
+			.transition()
+			.style("opacity",1)
+			.style("border-left",null);
+		}, Math.random() * 1000);
+
+		
+		return "9px solid " + colors[Math.round(Math.random() * colors.length)]
+	    });
+	
+	// setTimeout(function(){
+	//     d3.selectAll(".grant")
+	// 	.transition()
+	// 	.style("border-left",null);
+	// }, 250);
+    }
+    
     var update_cards = function(){
+	disco_fever();
 	var recipient = picker.node().options[picker.node().selectedIndex].value;
 	var town_data = TOWN_RUNS[recipient];
+
+	grant_boxes.classed("loser", function(d){
+		var amt_2018 = numeral(TOWN_RUNS[recipient][d["Town Grant Name"] + "_FY 2018"]).value()
+		var amt_2017 = numeral(TOWN_RUNS[recipient][d["Town Grant Name"] + "_FY 2017"]).value()
+		var diff =  amt_2018 - amt_2017;
+		var diff_pct = diff / amt_2017;
+
+		return diff < 0;
+
+	    })
+
+	
 	town_details.html("")
 	    .classed("no-town-details",function(d){
 		console.log("len", d["Town Grant Name"].length);
@@ -17770,11 +17814,22 @@ var go = function(d)
 		return ret + diff_pct_str;
 	    });
     }
+    
     picker.on("change", update_cards);
-
     
     grant_boxes.append("div").classed("clear-both", true);
 
+    grant_boxes.on("click", function(){
+
+	if (d3.select(this).selectAll(".detail").style("display") != null){
+	    d3.selectAll(".detail").style("display","none");
+	    d3.select(this).selectAll(".detail").style("display",null);
+	}
+	else
+	    d3.select(this).selectAll(".detail").style("display","none");
+    });
+
+    d3.selectAll(".detail").style("display","none");
 
     update_cards();    
 }
