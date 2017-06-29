@@ -72,6 +72,7 @@ div.month.this-month{
     border-bottom: 1px solid #ebebeb;
     padding: 3px;
     border-left: 9px solid white;
+    background-color: white;
 }
 
 
@@ -183,10 +184,12 @@ h3.viz_hed{
 }
 
 .town-detail{
-    border-radius: 2px;
+    border-radius: 0px 10px 10px 0px;
     color: black;
     /* background-color: #ebebeb; */
-    padding: 4px;
+    padding: 10px;
+    margin-right: 15px;
+    margin-left: -3px;
 }
 
 .town-detail {
