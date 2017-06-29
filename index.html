@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="stylesheet" href="style/municipal-calendar.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="viz">
+      <h3 class="viz_hed">Municipal aid: When the checks go out</h3>
+      <div class="explainer">
+	Municipal grants are scheduled to go out in portions throughout the
+	year. Without a budget, the governor's executive order dictates
+	funding levels of each grant. This calendar shows when portions of
+	each grant are scheduled to be paid to towns. Choose your town to
+	see how funding would change for certain grants under the
+	governor's plan. 
+	<div style="display:inline-block">
+	  <div class="box million"></div> = grant program > $1 million statewide
+	</div>
+	<div style="display:inline-block">      
+	  <div class="box billion"></div> = grant program > $100 million statewide
+	</div>
+	<div style="display:inline-block">      
+	  <div class="box loser"></div> = Your town loses money.
+	</div>
+
+      </div>
+      <div id="container"></div>
+      <div class="sourceline">SOURCE: </div>
+      <div class="byline">Jake Kara / CT Mirror</div>
+    </div>
+    <script src="js/grant-calendar.js"></script>
+  </body>
+</html>
