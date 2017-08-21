@@ -69,9 +69,10 @@ var go = function(d)
 	}
     });
 
-    CONTAINER.append("div").classed("picker_label", true).text("Select your town:");
-    var picker = CONTAINER.append("div").append("select");
-    CONTAINER.append("div").classed("clear-both", true);
+    var picker_area = CONTAINER.append("div").classed("picker_area", true);
+    picker_area.append("div").classed("picker_label", true).text("Select your town:");
+    var picker = picker_area.append("div").append("select");
+    picker_area.append("div").classed("clear-both", true);
 
     picker.selectAll("option")
 	.data(TOWNS).enter()
@@ -115,7 +116,8 @@ var go = function(d)
 	.data(function(d){ return d["grants"]; })
 	.enter()
 	.append("div")    
-	.attr("data-grant-name", function(d){ return d["Appropriation Name"]; })
+	.attr("data-grant-name", function(d){
+	    return d["Town Grant Name"] || d["Appropriation Name"]; })
     	.classed("billion", function(d){
 	    console.log
 	    return numeral(d["FY 17 Net Appropriation"])
@@ -211,7 +213,6 @@ var go = function(d)
 	
 	town_details.html("")
 	    .classed("no-town-details",function(d){
-		console.log("len", d["Town Grant Name"].length);
 		return d["Town Grant Name"].length < 1;
 	    })
 	town_details
@@ -226,15 +227,15 @@ var go = function(d)
 	    })
 	    .append("div")
 	    .html(function(d){
-		if (d["Town Grant Name"].length < 1) return;
-		console.log([d["Town Grant Name"]],
-			    TOWN_RUNS[recipient]);
+		if (d["Town Grant Name"].length < 1) return "* Town-level data not available";
+		// console.log([d["Town Grant Name"]],
+		// 	    TOWN_RUNS[recipient]);
 
 		var amt_2018 = numeral(TOWN_RUNS[recipient][d["Town Grant Name"] + "_FY 2018"]).value()
 		var amt_2017 = numeral(TOWN_RUNS[recipient][d["Town Grant Name"] + "_FY 2017"]).value()
 		var diff =  amt_2018 - amt_2017;
 		var diff_pct = diff / amt_2017;
-		
+
 		var ret =  "<strong>" + recipient + ":</strong> "
 		    + numeral(amt_2017).format("$0a").toUpperCase()
 		    + "<i class=\"fa fa-arrow-right\" aria-hidden=\"true\"></i>"
@@ -242,13 +243,25 @@ var go = function(d)
 
 		var diff_pct_str = "";
 		if (!isNaN(diff_pct)) {
-		    
 		    diff_pct_str = " ("
 			+ numeral(diff_pct).format("+0%")
 			+ ")";
 
+		}
+
+		
+		if (numeral(amt_2017).value() == 0 && numeral(amt_2018).value() == 0)
+		{
+		    return "<strong>" + recipient + ":</strong> "
+			+ "Funding under this grant for " + recipient + "  would remain at $0";
+		    // + numeral(amt_2017).format("$0a").toUpperCase()
+		    // + " in FY 2017 to " 
+		    // + numeral(amt_2018).format("$0a").toUpperCase()
+		    // + diff_pct_str
+		    // + " in FY 2018 under the governor's executive order.";
 		    
 		}
+
 
 		return "<strong>" + recipient + ":</strong> "
 		    + "Funding under this grant for " + recipient + "  would go from "

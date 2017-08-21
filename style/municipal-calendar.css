@@ -18,6 +18,7 @@ body{
 
 
 div.month{
+
     /* float:left; */
     display: inline-block;
     vertical-align:top;
@@ -30,10 +31,12 @@ div.month{
     /* width: 250px; */
     padding-top: 0px;
     padding: 0px;
+    /* max-height: 200px; */
     overflow-y: scroll;
     /* background-color: #ebebeb; */
     /* border: 1px solid #ebebeb; */
-    min-width: 240px;
+    /* min-width: 240px; */
+    
     margin-bottom: 2px;
 }
 
@@ -43,7 +46,7 @@ div.month.this-month{
 
 @media(min-width:500px){
     div.month,.town_picker{
-	width: 200px;
+	width: 240px;
     }
 
 }
@@ -51,6 +54,7 @@ div.month.this-month{
 @media(max-width:499px){
     div.month,.town_picker{
 	width: 100%;
+	/* max-height: inherit; */
     }
 
 }
@@ -126,9 +130,20 @@ div.month.this-month{
     cursor: pointer
 }
 
+.picker_area{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
 .picker_label{
     float:left;
     font-size: 12px;
+}
+
+.picker_area select{
+    width: 100%;
 }
 
 .red-dot {
