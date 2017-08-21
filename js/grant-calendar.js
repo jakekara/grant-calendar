@@ -17767,6 +17767,7 @@ var go = function(d)
 	    .classed("no-town-details",function(d){
 		return d["Town Grant Name"].length < 1;
 	    })
+
 	town_details
 	    .classed("loser", function(d){
 		var amt_2018 = numeral(TOWN_RUNS[recipient][d["Town Grant Name"] + "_FY 2018"]).value()
